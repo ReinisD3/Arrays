@@ -123,7 +123,7 @@ while ($game_on == true)
                 echo 'It is a tie'.PHP_EOL;
                 if(ask_new_game())
                 {
-                    $board = clean_board($board);
+                    $board = clean_board();
                 }else{
                     return $game_on = false;
                 }
