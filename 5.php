@@ -28,7 +28,6 @@ function ask_new_game():bool
     }
 }
 
-
 function player_turn(int $player_index):string
 {
     if($player_index % 2 == 0 )
@@ -48,7 +47,6 @@ function check_tie(array $board):bool
         }
     }
     return true;
-
 }
 
 function check_for_win(array $board):bool
@@ -78,8 +76,8 @@ function get_valid_input(string $player,array $board):string
     while($run)
     {
         $input = readline($player.", choose your location (row, column): ");
-        $row = (int) $input[0];
-        $column = (int) $input[2];
+        $row = is_numeric($input[0]) ? (int) $input[0] : $input[0] ;
+        $column = is_numeric($input[2]) ? (int) $input[2] : $input[2] ;
         if (isset($board[$row][$column]) && $board[$row][$column] === ' ')
         {
              $run = false;
@@ -89,11 +87,8 @@ function get_valid_input(string $player,array $board):string
             echo 'Wrong input try again ! Valid input: row(number) space column(number) '.PHP_EOL;
         }
     }
-
     return $input;
-
 }
-
 
 echo 'Welcome to tic-tac-toe'.PHP_EOL;
 $player_index = 1;
