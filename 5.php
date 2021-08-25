@@ -73,6 +73,7 @@ function check_for_win(array $board):bool
 function get_valid_input(string $player,array $board):string
 {
     $run = true;
+    $input = '';
     while($run)
     {
         $input = readline($player.", choose your location (row, column): ");
