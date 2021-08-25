@@ -9,23 +9,23 @@ function choose_random_word(array $wordList):array
     $random_index = rand(0,count($wordList)-1);
     return str_split($wordList[$random_index]);
 }
-function generate(array $guessing_word):array
+function generate(array $guessWord):array
 {
-    $arr = [];
-    foreach ($guessing_word as $i)
+    $emptyWord = [];
+    foreach ($guessWord as $i)
     {
         array_push($arr,'_');
     }
-    return $arr;
+    return $emptyWord;
 }
 
-function display(array $guessed_name_array,string $missedGuesses):void
+function display(array $guessedLetters,string $missedGuesses):void
 {
 
 
     echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-".PHP_EOL.PHP_EOL;
     echo 'Guess the word:    ';
-    foreach ($guessed_name_array as $letter)
+    foreach ($guessedLetters as $letter)
     {
         echo $letter.' ';
     }
@@ -34,13 +34,14 @@ function display(array $guessed_name_array,string $missedGuesses):void
 }
 
 
-function get_valid_input($alreadyGuessed,$missedGuesses):string
+function get_valid_input($guessedLetters,$missedGuesses):string
 {
     $input = true;
+    $guess = '';
     while($input)
     {
         $guess = readline('Make next guess: ');
-        if (in_array($guess,$alreadyGuessed) || in_array($guess,str_split($missedGuesses)) || strlen($guess) > 1)
+        if (in_array($guess,$guessedLetters) || in_array($guess,str_split($missedGuesses)) || strlen($guess) > 1)
         {
             echo 'Wrong input or already used letter, try again : '.PHP_EOL;
         }
@@ -65,21 +66,21 @@ function check_guess($guess, $guessWord):bool
     }
 }
 
-function update_guessed_word(string $guess,array $alreadyGuessed, array $guessWord):array
+function update_guessed_word(string $guess,array $guessedLetters, array $guessWord):array
 {
-    for ($i = 0 ; $i < count($alreadyGuessed); $i++)
+    for ($i = 0 ; $i < count($guessedLetters); $i++)
     {
         if ($guess === $guessWord[$i])
         {
-            $alreadyGuessed[$i] = $guess;
+            $guessedLetters[$i] = $guess;
         }
     }
-    return $alreadyGuessed;
+    return $guessedLetters;
 }
 
-function check_if_guessed(array $guessWord,array $alreadyGuessed):bool
+function check_if_guessed(array $guessWord,array $guessedLetters):bool
 {
-    if($guessWord == $alreadyGuessed)
+    if($guessWord == $guessedLetters)
     {
         return true;
     }
@@ -103,23 +104,23 @@ function new_game():bool
 
 
     $guessWord = choose_random_word($wordList);
-    $alreadyGuessed = generate($guessWord);
+    $guessedLetters = generate($guessWord);
     $missedGuesses = '';
     $gameOn = true;
 
     while ($gameOn) {
 
-        display($alreadyGuessed, $missedGuesses);
-        $guess = get_valid_input($alreadyGuessed, $missedGuesses);
+        display($guessedLetters, $missedGuesses);
+        $guess = get_valid_input($guessedLetters, $missedGuesses);
 
         if (check_guess($guess, $guessWord)) {
-            $alreadyGuessed = update_guessed_word($guess, $alreadyGuessed, $guessWord);
-            if (check_if_guessed($guessWord, $alreadyGuessed)) {
-                display($alreadyGuessed, $missedGuesses);
+            $guessedLetters = update_guessed_word($guess, $guessedLetters, $guessWord);
+            if (check_if_guessed($guessWord, $guessedLetters)) {
+                display($guessedLetters, $missedGuesses);
                 echo 'YOU GOT IT!' . PHP_EOL;
                 if (new_game()){
                     $guessWord = choose_random_word($wordList);
-                    $alreadyGuessed = generate($guessWord);
+                    $guessedLetters = generate($guessWord);
                     $missedGuesses = '';
                 }else{
                     $gameOn = false;
@@ -133,7 +134,7 @@ function new_game():bool
                 echo 'You have used 6 missed tries  - GAME OVER' . PHP_EOL;
                 if (new_game()){
                     $guessWord = choose_random_word($wordList);
-                    $alreadyGuessed = generate($guessWord);
+                    $guessedLetters = generate($guessWord);
                     $missedGuesses = '';
                 }else{
                     $gameOn = false;
