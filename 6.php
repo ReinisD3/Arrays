@@ -14,7 +14,7 @@ function generate(array $guessWord):array
     $emptyWord = [];
     foreach ($guessWord as $i)
     {
-        array_push($arr,'_');
+        array_push($emptyWord,'_');
     }
     return $emptyWord;
 }
@@ -101,7 +101,6 @@ function new_game():bool
 
 
 //game logic
-
 
     $guessWord = choose_random_word($wordList);
     $guessedLetters = generate($guessWord);
