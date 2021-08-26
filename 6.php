@@ -1,7 +1,5 @@
 <?php
 
-
-
 $wordList = ['instrument','function','philosophy','generation'];
 
 function choose_random_word(array $wordList):array
@@ -21,8 +19,6 @@ function generate(array $guessWord):array
 
 function display(array $guessedLetters,string $missedGuesses):void
 {
-
-
     echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-".PHP_EOL.PHP_EOL;
     echo 'Guess the word:    ';
     foreach ($guessedLetters as $letter)
@@ -30,7 +26,6 @@ function display(array $guessedLetters,string $missedGuesses):void
         echo $letter.' ';
     }
     echo PHP_EOL.PHP_EOL.'Missed guesses: '.$missedGuesses.PHP_EOL.PHP_EOL;
-
 }
 
 
@@ -51,21 +46,11 @@ function get_valid_input($guessedLetters,$missedGuesses):string
         }
     }
     return $guess;
-
 }
-
 function check_guess($guess, $guessWord):bool
 {
-    if(in_array($guess,$guessWord))
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return (in_array($guess,$guessWord));
 }
-
 function update_guessed_word(string $guess,array $guessedLetters, array $guessWord):array
 {
     for ($i = 0 ; $i < count($guessedLetters); $i++)
@@ -77,38 +62,21 @@ function update_guessed_word(string $guess,array $guessedLetters, array $guessWo
     }
     return $guessedLetters;
 }
-
 function check_if_guessed(array $guessWord,array $guessedLetters):bool
 {
-    if($guessWord == $guessedLetters)
-    {
-        return true;
-    }
-    return false;
+    return $guessWord == $guessedLetters;
 }
 
 function new_game():bool
 {
-    if (readline("Play 'again' or 'quit'?: ") === "again")
-    {
-
-        return true;
-    }
-    return false;
-
+    return (readline("Play 'again' or 'quit'?: ") === "again");
 }
-
-
-
 //game logic
-
     $guessWord = choose_random_word($wordList);
     $guessedLetters = generate($guessWord);
     $missedGuesses = '';
     $gameOn = true;
-
     while ($gameOn) {
-
         display($guessedLetters, $missedGuesses);
         $guess = get_valid_input($guessedLetters, $missedGuesses);
 
@@ -124,7 +92,6 @@ function new_game():bool
                 }else{
                     $gameOn = false;
                 }
-
             }
 
         } else {
